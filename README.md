@@ -1,5 +1,10 @@
 <h1>Package: nrk-api</h1>
 
+[![npm version](https://img.shields.io/npm/v/nrk-api.svg?style=flat-square)](https://www.npmjs.org/package/nrk-api)
+[![install size](https://img.shields.io/badge/dynamic/json?url=https://packagephobia.com/v2/api.json?p=nrk-api&query=$.install.pretty&label=install%20size&style=flat-square)](https://packagephobia.now.sh/result?p=nrk-api)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/nrk-api?style=flat-square)](https://bundlephobia.com/package/nrk-api@latest)
+[![npm downloads](https://img.shields.io/npm/dm/nrk-api.svg?style=flat-square)](https://npm-stat.com/charts.html?package=nrk-api)
+
 <h2>Table of Contents</h2>
 <ul>
     <li><a href="#description">Description</a></li>
