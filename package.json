@@ -1,8 +1,8 @@
 {
     "name": "nrk-api",
     "type": "commonjs",
-    "version": "1.0.0",
-    "description": "Package for communicating with the NRK (Norwegian Broadcasting Service) api.",
+    "version": "1.0.1",
+    "description": "Package for communicating with the NRK (Norwegian Broadcasting Service) API.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "homepage": "https://github.com/Nomissimon10/nrk-api",
@@ -34,5 +34,8 @@
     },
     "contributors": [
         "Simon Lyngar (https://github.com/Nomissimon10)"
-    ]
+    ],
+    "engines": {
+      "node": ">=12.20"
+    }
 }
