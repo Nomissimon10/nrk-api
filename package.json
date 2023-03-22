@@ -34,5 +34,8 @@
     },
     "contributors": [
         "Simon Lyngar (https://github.com/Nomissimon10)"
-    ]
+    ],
+    "engines": {
+      "node": ">=12.20"
+    }
 }

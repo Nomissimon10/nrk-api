@@ -4,6 +4,7 @@
 [![install size](https://img.shields.io/badge/dynamic/json?url=https://packagephobia.com/v2/api.json?p=nrk-api&query=$.install.pretty&label=install%20size&style=flat-square)](https://packagephobia.now.sh/result?p=nrk-api)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/nrk-api?style=flat-square)](https://bundlephobia.com/package/nrk-api@latest)
 [![npm downloads](https://img.shields.io/npm/dm/nrk-api.svg?style=flat-square)](https://npm-stat.com/charts.html?package=nrk-api)
+[![Node version](https://img.shields.io/node/v/nrk-api.svg "Node version")](https://www.npmjs.com/package/nrk-api)
 
 <h2>Table of Contents</h2>
 <ul>
@@ -22,7 +23,7 @@
 <ul>
     <li>&#x2611 Make requests to retrieve all pages and categories. (NRK TV)</li>
     <li>&#x2612 Utilities to do special operations with the category data. (NRK TV)</li>
-    <li>&#x2612 Make requests to retrieve all program and series information. (NRK TV)</li>
+    <li>&#x2611 Make requests to retrieve all program and series information. (NRK TV)</li>
     <li>&#x2612 Make utils to better process the program and series data. (NRK TV)</li>
     <li>&#x2612 Make requests to retrieve all pages and categories. (NRK Super)</li>
     <li>&#x2612 Utilities to do special operations with the category data. (NRK Super)</li>
