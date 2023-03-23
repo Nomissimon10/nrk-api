@@ -17,7 +17,7 @@
 </ul>
 
 <h2 id="description">Description</h2>
-<p>nrk-api is a simple API wrapper for the NRK API. The package uses the official NRK-API to fetch the information. (<a href="https://psapi.nrk.no/documentation/">https://psapi.nrk.no/documentation/</a>)</p>
+<p>nrk-api is a simple API wrapper for the NRK API. The package uses the official NRK-API to fetch the information. (<a href="https://psapi.nrk.no/documentation/">https://psapi.nrk.no/documentation/</a>) Both TypeScript and JavaScript is supported.</p>
 
 <h2 id="features">Features</h2>
 <ul>
