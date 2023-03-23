@@ -1,3 +1,5 @@
+import { ContentGroup } from "../enums"
+
 export default interface TvPageOptions {
     userSegments?: string
     experimentId?: string
@@ -5,6 +7,6 @@ export default interface TvPageOptions {
     limit?: number
     offset?: number
     imageProfile?: string
-    contentGroup?: string
+    contentGroup?: ContentGroup
     age?: number
 }

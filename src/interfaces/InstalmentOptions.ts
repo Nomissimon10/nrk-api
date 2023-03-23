@@ -1,8 +1,8 @@
-import { AgeRestriction } from '../enums'
+import { AgeRestriction, ContentGroup } from '../enums'
 
 export default interface InstalmentOptions {
     pageSize?: number
     page?: number
-    contentGroup?: string
+    contentGroup?: ContentGroup
     ageRestriction?: AgeRestriction
 }

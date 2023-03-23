@@ -3,15 +3,11 @@ import {
     ProgramOptions,
     SeasonOptions,
     SeriesOptions,
-    TvCategoryPageOptions,
-    TvFrontPageOptions,
     TvPageOptions,
     TvSectionOptions,
     TvSubPagesOptions,
 } from '../interfaces'
-import {
-    InvalidProgramIdError,
-} from '../errors'
+import { InvalidProgramIdError } from '../errors'
 import { request } from '../utils'
 
 /**
@@ -27,7 +23,7 @@ import { request } from '../utils'
  * Get a given tv page, like frontDeskTv
  * @param {string} pageId - The id of the page
  * @param {TvPageOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getGivenTvPage('frontDeskTv', { limit: 2 })
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
@@ -43,14 +39,13 @@ export const getGivenTvPage = async (
         options
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get all tv sub-pages
  * @param {TvSubPagesOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getAllTVSubPages()
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
@@ -62,14 +57,13 @@ export const getAllTVSubPages = async (
 ): Promise<Object> => {
     const result = await request(`https://psapi.nrk.no/tv/pages`, options)
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get the front page of tv
  * @param {TvFrontPageOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTVFrontPage()
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
@@ -77,21 +71,20 @@ export const getAllTVSubPages = async (
  * @throws {AxiosError} if the request fails
  */
 export const getTVFrontPage = async (
-    options?: TvFrontPageOptions
+    options?: TvPageOptions
 ): Promise<Object> => {
     const result = await request(
         `https://psapi.nrk.no/tv/pages/frontpage`,
         options
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get the tv category page
  * @param {TvCategoryPageOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTVCategoryPage()
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
@@ -99,15 +92,14 @@ export const getTVFrontPage = async (
  * @throws {AxiosError} if the request fails
  */
 export const getTVCategoryPage = async (
-    options?: TvCategoryPageOptions
+    options?: TvPageOptions
 ): Promise<Object> => {
     const result = await request(
         `https://psapi.nrk.no/tv/pages/categories`,
         options
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
@@ -115,7 +107,7 @@ export const getTVCategoryPage = async (
  * @param {string} pageId - The id of the page
  * @param {string} sectionTitle - The title of the section
  * @param {TvSectionOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getGivenSectionForTVPage('frontDeskTv', 'anbefalt')
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
@@ -133,14 +125,13 @@ export const getGivenSectionForTVPage = async (
         options
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get a given offline tv page
  * @param {string} pageId - The id of the page
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getGivenOfflineTVPage('frontDeskTv')
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
@@ -154,8 +145,7 @@ export const getGivenOfflineTVPage = async (
         `https://psapi.nrk.no/tv/pages/offline/${pageId}`
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
@@ -171,7 +161,7 @@ export const getGivenOfflineTVPage = async (
  * Get the front page of a program
  * @param {string} programId - The id of the program
  * @param {ProgramOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getProgramPage('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -193,14 +183,13 @@ export const getProgramPage = async (
         options
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get the navigation aid for a program
  * @param {string} programId - The id of the program
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getNavigationAidForProgram('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -220,15 +209,14 @@ export const getNavigationAidForProgram = async (
         `https://psapi.nrk.no/tv/catalog/programsContext/${programId}}`
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get the navigation aid for a offline program
  * @param {string} programId - The id of the program
  * @param {ProgramOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getNavigationAidForOfflineProgram('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -250,15 +238,14 @@ export const getNavigationAidForOfflineProgram = async (
         options
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Gets the specified TV series
  * @param {string} seriesId - The id of the series
  * @param {SeriesOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTVSeries('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -279,15 +266,14 @@ export const getTVSeries = async (
         options
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Gets the specified TV series extramaterials
  * @param {string} seriesId - The id of the series
  * @param {ProgramOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTVSeriesExtramaterials('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -308,14 +294,13 @@ export const getTVSeriesExtramaterials = async (
         options
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Gets the type of the specified TV series
  * @param {string} seriesId - The id of the series
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTypeOfTVSeries('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -332,15 +317,14 @@ export const getTypeOfTVSeries = async (seriesId: string): Promise<Object> => {
         `https://psapi.nrk.no/tv/catalog/series/${seriesId}/type`
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Gets the specified TV series instalments
  * @param {string} seriesId - The id of the series
  * @param {InstalmentOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTvSeriesInstalments('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -361,8 +345,7 @@ export const getTvSeriesInstalments = async (
         options
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
@@ -370,7 +353,7 @@ export const getTvSeriesInstalments = async (
  * @param {string} seriesId - The id of the series
  * @param {string | number} seasonId - The id of the season
  * @param {SeasonOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getSeriesSeason('kongen-av-gulset', 1)
  * @throws {InvalidProgramIdError} - If the series id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -392,14 +375,13 @@ export const getSeriesSeason = async (
         options
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Gets the dimensions for the specified program
  * @param {string} programId - The id of the program
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getDimensionsForProgram('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -414,6 +396,5 @@ export const getDimensionsForProgram = async (
         `https://psapi.nrk.no/tv/programs/pageviews/ga/${programId}`
     )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }

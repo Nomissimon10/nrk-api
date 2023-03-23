@@ -22,5 +22,6 @@ export const request = async (url: string, options?: any) => {
         return e
     })
 
-    return result
+    if (result instanceof Error) return result
+    return result.data
 }
