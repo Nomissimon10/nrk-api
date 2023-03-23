@@ -9,7 +9,7 @@ import { interfaceToQuery } from '.'
 /**
  * Makes a request to the NRK API
  * @param {string} url - The url to request
- * @param {interface} options - The options to be passed as query parameters
+ * @param {interface} options - The options to be passed as query parameters (default: undefined)
  * @returns {Promise<Object>} The response
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded

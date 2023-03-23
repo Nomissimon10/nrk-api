@@ -10,7 +10,6 @@
 <ul>
     <li><a href="#description">Description</a></li>
     <li><a href="#features">Features</a></li>
-    <li><a href="#examples">Examples</a></li>
     <li><a href="#errors">Handling Errors</a></li>
     <li><a href="#api">NRK API</a></li>
     <li><a href="#disclaimer">Disclaimer</a></li>
@@ -24,7 +23,7 @@
 <ul>
     <li>&#x2611 Retrieve all pages and categories for NRK TV</li>
     <li>&#x2611 Retrieve all pages and categories for NRK Super</li>
-    <li>&#x2612 Retrieve all pages and categories for NRK Radio</li>
+    <li>&#x2611 Retrieve all pages and categories for NRK Radio</li>
 </ul>
 <h3>Program & series-pages</h3>
 <ul>
@@ -38,8 +37,6 @@
     <li>&#x2612 Make utilities for simplifying tasks and requests that follow a natural pattern for NRK Super</li>
     <li>&#x2612 Make utilities for simplifying tasks and requests that follow a natural pattern for NRK Radio</li>
 </ul>
-
-<h2 id="examples">Examples</h2>
 
 <h2 id="errors">Handling Errors</h2>
 <ul>

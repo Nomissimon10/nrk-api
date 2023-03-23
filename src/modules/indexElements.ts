@@ -36,7 +36,7 @@ export const getAllLettersFromMedium = async (
  * Get index elements from a medium
  * @param {Medium} medium - The medium to get index elements from
  * @param {string} letter - The letter to get index elements from
- * @param {SuperUniverseOptions} options - Options for the index elements
+ * @param {SuperUniverseOptions} options - Options for the index elements (default: undefined)
  * @returns {Promise<Object>} - Returns index elements from a medium
  * @example getIndexElementsFromMedium(Medium.TV, 'a')
  * @throws {PageNotFoundError} if the page doesn't exist

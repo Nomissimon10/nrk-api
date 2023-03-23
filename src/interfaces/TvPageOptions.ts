@@ -1,9 +1,9 @@
-import { ContentGroup } from "../enums"
+import { ContentGroup, Variant } from '../enums'
 
 export default interface TvPageOptions {
     userSegments?: string
     experimentId?: string
-    variant?: number
+    variant?: Variant
     limit?: number
     offset?: number
     imageProfile?: string
