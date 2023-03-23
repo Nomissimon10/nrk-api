@@ -6,6 +6,16 @@ import {
 } from '../errors'
 import { interfaceToQuery } from '.'
 
+/**
+ * Makes a request to the NRK API
+ * @param {string} url - The url to request
+ * @param {interface} options - The options to be passed as query parameters
+ * @returns {Promise<Object>} The response
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
+ * @throws {AxiosError} if the request fails
+ */
 export const request = async (url: string, options?: any) => {
     const queryParameter = interfaceToQuery(options)
 
