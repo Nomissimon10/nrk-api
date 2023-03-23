@@ -1,4 +1,3 @@
-import axios, { AxiosError } from 'axios'
 import {
     InstalmentOptions,
     ProgramOptions,
@@ -11,12 +10,9 @@ import {
     TvSubPagesOptions,
 } from '../interfaces'
 import {
-    PageNotFoundError,
-    RateLimitError,
     InvalidProgramIdError,
-    AgeRestrictionError,
 } from '../errors'
-import { interfaceToQuery, request } from '../utils'
+import { request } from '../utils'
 
 /**
    ______ _____   ____  _   _ _______             _____       _______ ______ _____  ____  _______     __     _____        _____ ______  _____ 
@@ -58,6 +54,7 @@ export const getGivenTvPage = async (
  * @example getAllTVSubPages()
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getAllTVSubPages = async (
@@ -76,6 +73,7 @@ export const getAllTVSubPages = async (
  * @example getTVFrontPage()
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTVFrontPage = async (
@@ -97,6 +95,7 @@ export const getTVFrontPage = async (
  * @example getTVCategoryPage()
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTVCategoryPage = async (
@@ -118,8 +117,9 @@ export const getTVCategoryPage = async (
  * @param {TvSectionOptions} options - The options for the request (default: undefined)
  * @returns {Object} - The response from the request or an axios error
  * @example getGivenSectionForTVPage('frontDeskTv', 'anbefalt')
- * @throws {PageNotFoundError} if the page or section title doesn't exist
+ * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getGivenSectionForTVPage = async (
@@ -142,8 +142,9 @@ export const getGivenSectionForTVPage = async (
  * @param {string} pageId - The id of the page
  * @returns {Object} - The response from the request or an axios error
  * @example getGivenOfflineTVPage('frontDeskTv')
- * @throws {PageNotFoundError} if the page doesn't exist or is not downloadable
+ * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getGivenOfflineTVPage = async (
@@ -173,8 +174,9 @@ export const getGivenOfflineTVPage = async (
  * @returns {Object} - The response from the request or an axios error
  * @example getProgramPage('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
- * @throws {PageNotFoundError} - If the program page doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getProgramPage = async (
@@ -201,8 +203,9 @@ export const getProgramPage = async (
  * @returns {Object} - The response from the request or an axios error
  * @example getNavigationAidForProgram('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
- * @throws {PageNotFoundError} - If the program doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getNavigationAidForProgram = async (
@@ -228,8 +231,9 @@ export const getNavigationAidForProgram = async (
  * @returns {Object} - The response from the request or an axios error
  * @example getNavigationAidForOfflineProgram('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
- * @throws {PageNotFoundError} - If the program doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getNavigationAidForOfflineProgram = async (
@@ -257,8 +261,9 @@ export const getNavigationAidForOfflineProgram = async (
  * @returns {Object} - The response from the request or an axios error
  * @example getTVSeries('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
- * @throws {PageNotFoundError} - If the series doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTVSeries = async (
@@ -285,8 +290,9 @@ export const getTVSeries = async (
  * @returns {Object} - The response from the request or an axios error
  * @example getTVSeriesExtramaterials('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
- * @throws {PageNotFoundError} - If the series doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTVSeriesExtramaterials = async (
@@ -312,8 +318,9 @@ export const getTVSeriesExtramaterials = async (
  * @returns {Object} - The response from the request or an axios error
  * @example getTypeOfTVSeries('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
- * @throws {PageNotFoundError} - If the series doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTypeOfTVSeries = async (seriesId: string): Promise<Object> => {
@@ -336,8 +343,9 @@ export const getTypeOfTVSeries = async (seriesId: string): Promise<Object> => {
  * @returns {Object} - The response from the request or an axios error
  * @example getTvSeriesInstalments('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
- * @throws {PageNotFoundError} - If the series doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTvSeriesInstalments = async (
@@ -365,8 +373,9 @@ export const getTvSeriesInstalments = async (
  * @returns {Object} - The response from the request or an axios error
  * @example getSeriesSeason('kongen-av-gulset', 1)
  * @throws {InvalidProgramIdError} - If the series id is invalid
- * @throws {PageNotFoundError} - If the series or season doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getSeriesSeason = async (
@@ -393,7 +402,9 @@ export const getSeriesSeason = async (
  * @returns {Object} - The response from the request or an axios error
  * @example getDimensionsForProgram('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
- * @throws {PageNotFoundError} - If the program doesn't exist
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getDimensionsForProgram = async (
