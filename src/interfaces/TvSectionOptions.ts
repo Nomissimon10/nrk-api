@@ -1,7 +1,9 @@
+import { ContentGroup, Variant } from '../enums'
+
 export default interface TvCategoryPageOptions {
     userSegments?: string
     experimentId?: string
-    variant?: number
-    contentGroup?: string
+    variant?: Variant
+    contentGroup?: ContentGroup
     age?: number
 }

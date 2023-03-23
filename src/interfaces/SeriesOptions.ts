@@ -1,8 +1,8 @@
-import { AgeRestriction } from '../enums'
+import { AgeRestriction, ContentGroup } from '../enums'
 
 export default interface SeriesOptions {
     embeddedInstalmentsPageSize?: number
     embed?: boolean
-    contentGroup?: string
+    contentGroup?: ContentGroup
     ageRestriction?: AgeRestriction
 }

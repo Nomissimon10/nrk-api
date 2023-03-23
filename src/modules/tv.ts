@@ -1,21 +1,14 @@
-import axios, { AxiosError } from 'axios'
 import {
     InstalmentOptions,
     ProgramOptions,
     SeasonOptions,
     SeriesOptions,
-    TvCategoryPageOptions,
-    TvFrontPageOptions,
     TvPageOptions,
     TvSectionOptions,
     TvSubPagesOptions,
 } from '../interfaces'
-import {
-    PageNotFoundError,
-    RateLimitError,
-    InvalidProgramIdError,
-} from '../errors'
-import { interfaceToQuery } from '../utils'
+import { InvalidProgramIdError } from '../errors'
+import { request } from '../utils'
 
 /**
    ______ _____   ____  _   _ _______             _____       _______ ______ _____  ____  _______     __     _____        _____ ______  _____ 
@@ -30,107 +23,83 @@ import { interfaceToQuery } from '../utils'
  * Get a given tv page, like frontDeskTv
  * @param {string} pageId - The id of the page
  * @param {TvPageOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getGivenTvPage('frontDeskTv', { limit: 2 })
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getGivenTvPage = async (
     pageId: string,
     options?: TvPageOptions
 ): Promise<Object> => {
-    let queryParameter = interfaceToQuery(options)
+    const result = await request(
+        `https://psapi.nrk.no/tv/pages/${pageId}`,
+        options
+    )
 
-    const result = await axios
-        .get(`https://psapi.nrk.no/tv/pages/${pageId}?${queryParameter}`)
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError("Tv Page doesn't exist")
-            else if (e.response.status === 429)
-                return new RateLimitError(
-                    'Rate limit exceeded, try again later (429)'
-                )
-            return e
-        })
-
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get all tv sub-pages
  * @param {TvSubPagesOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getAllTVSubPages()
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getAllTVSubPages = async (
     options?: TvSubPagesOptions
 ): Promise<Object> => {
-    const queryParameter = interfaceToQuery(options)
-    const result = await axios
-        .get(`https://psapi.nrk.no/tv/pages?${queryParameter}`)
-        .catch((e) => {
-            if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(`https://psapi.nrk.no/tv/pages`, options)
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get the front page of tv
  * @param {TvFrontPageOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTVFrontPage()
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTVFrontPage = async (
-    options?: TvFrontPageOptions
+    options?: TvPageOptions
 ): Promise<Object> => {
-    const queryParameter = interfaceToQuery(options)
-    const result = await axios
-        .get(`https://psapi.nrk.no/tv/pages/frontpage?${queryParameter}`)
-        .catch((e) => {
-            if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/pages/frontpage`,
+        options
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get the tv category page
  * @param {TvCategoryPageOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTVCategoryPage()
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTVCategoryPage = async (
-    options?: TvCategoryPageOptions
+    options?: TvPageOptions
 ): Promise<Object> => {
-    const queryParameter = interfaceToQuery(options)
-    const result = await axios
-        .get(`https://psapi.nrk.no/tv/pages/categories?${queryParameter}`)
-        .catch((e) => {
-            if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/pages/categories`,
+        options
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
@@ -138,10 +107,11 @@ export const getTVCategoryPage = async (
  * @param {string} pageId - The id of the page
  * @param {string} sectionTitle - The title of the section
  * @param {TvSectionOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getGivenSectionForTVPage('frontDeskTv', 'anbefalt')
- * @throws {PageNotFoundError} if the page or section title doesn't exist
+ * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getGivenSectionForTVPage = async (
@@ -150,49 +120,32 @@ export const getGivenSectionForTVPage = async (
     options?: TvSectionOptions
 ): Promise<Object> => {
     sectionTitle = sectionTitle.toLowerCase()
-    const queryParameter = interfaceToQuery(options)
-    const result = await axios
-        .get(
-            `https://psapi.nrk.no/tv/pages/${pageId}/${sectionTitle}?${queryParameter}`
-        )
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError(
-                    "Tv Page or Section Title doesn't exist"
-                )
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/pages/${pageId}/${sectionTitle}`,
+        options
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get a given offline tv page
  * @param {string} pageId - The id of the page
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getGivenOfflineTVPage('frontDeskTv')
- * @throws {PageNotFoundError} if the page doesn't exist or is not downloadable
+ * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getGivenOfflineTVPage = async (
     pageId: string
 ): Promise<Object> => {
-    const result = await axios
-        .get(`https://psapi.nrk.no/tv/pages/offline/${pageId}`)
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError(
-                    "Tv Page doesn't exist or is not Downloadable"
-                )
-            else if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/pages/offline/${pageId}`
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
@@ -208,11 +161,12 @@ export const getGivenOfflineTVPage = async (
  * Get the front page of a program
  * @param {string} programId - The id of the program
  * @param {ProgramOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getProgramPage('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
- * @throws {PageNotFoundError} - If the program page doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getProgramPage = async (
@@ -224,31 +178,23 @@ export const getProgramPage = async (
     if (!regex1.test(programId) && !regex2.test(programId))
         return new InvalidProgramIdError('Invalid Program Id')
 
-    const queryParameter = interfaceToQuery(options)
-    const result = await axios
-        .get(
-            `https://psapi.nrk.no/tv/catalog/programs/${programId}?${queryParameter}`
-        )
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError('Program not found')
-            else if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/catalog/programs/${programId}`,
+        options
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get the navigation aid for a program
  * @param {string} programId - The id of the program
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getNavigationAidForProgram('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
- * @throws {PageNotFoundError} - If the program doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getNavigationAidForProgram = async (
@@ -259,29 +205,23 @@ export const getNavigationAidForProgram = async (
     if (!regex1.test(programId) && !regex2.test(programId))
         return new InvalidProgramIdError('Invalid Program Id')
 
-    const result = await axios
-        .get(`https://psapi.nrk.no/tv/catalog/programsContext/${programId}}`)
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError("Program doesn't exist")
-            else if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/catalog/programsContext/${programId}}`
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Get the navigation aid for a offline program
  * @param {string} programId - The id of the program
  * @param {ProgramOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getNavigationAidForOfflineProgram('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
- * @throws {PageNotFoundError} - If the program doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getNavigationAidForOfflineProgram = async (
@@ -293,32 +233,24 @@ export const getNavigationAidForOfflineProgram = async (
     if (!regex1.test(programId) && !regex2.test(programId))
         return new InvalidProgramIdError('Invalid Program Id')
 
-    const queryParameter = interfaceToQuery(options)
-    const result = await axios
-        .get(
-            `https://psapi.nrk.no/tv/catalog/offlineProgramsContext/${programId}?${queryParameter}`
-        )
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError("Program doesn't exist")
-            else if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/catalog/offlineProgramsContext/${programId}`,
+        options
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Gets the specified TV series
  * @param {string} seriesId - The id of the series
  * @param {SeriesOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTVSeries('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
- * @throws {PageNotFoundError} - If the series doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTVSeries = async (
@@ -329,32 +261,24 @@ export const getTVSeries = async (
     if (!regex.test(seriesId))
         return new InvalidProgramIdError('Invalid Series Id')
 
-    const queryParameter = interfaceToQuery(options)
-    const result = await axios
-        .get(
-            `https://psapi.nrk.no/tv/catalog/series/${seriesId}?${queryParameter}`
-        )
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError("Series doesn't exist")
-            else if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/catalog/series/${seriesId}`,
+        options
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Gets the specified TV series extramaterials
  * @param {string} seriesId - The id of the series
  * @param {ProgramOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTVSeriesExtramaterials('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
- * @throws {PageNotFoundError} - If the series doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTVSeriesExtramaterials = async (
@@ -365,31 +289,23 @@ export const getTVSeriesExtramaterials = async (
     if (!regex.test(seriesId))
         return new InvalidProgramIdError('Invalid Series Id')
 
-    const queryParameter = interfaceToQuery(options)
-    const result = await axios
-        .get(
-            `https://psapi.nrk.no/tv/catalog/series/${seriesId}/extramaterial?${queryParameter}`
-        )
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError("Series doesn't exist")
-            else if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/catalog/series/${seriesId}/extramaterial`,
+        options
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Gets the type of the specified TV series
  * @param {string} seriesId - The id of the series
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTypeOfTVSeries('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
- * @throws {PageNotFoundError} - If the series doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTypeOfTVSeries = async (seriesId: string): Promise<Object> => {
@@ -397,29 +313,23 @@ export const getTypeOfTVSeries = async (seriesId: string): Promise<Object> => {
     if (!regex.test(seriesId))
         return new InvalidProgramIdError('Invalid Series Id')
 
-    const result = await axios
-        .get(`https://psapi.nrk.no/tv/catalog/series/${seriesId}/type`)
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError("Series doesn't exist")
-            else if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/catalog/series/${seriesId}/type`
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Gets the specified TV series instalments
  * @param {string} seriesId - The id of the series
  * @param {InstalmentOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getTvSeriesInstalments('kongen-av-gulset')
  * @throws {InvalidProgramIdError} - If the series id is invalid
- * @throws {PageNotFoundError} - If the series doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getTvSeriesInstalments = async (
@@ -430,21 +340,12 @@ export const getTvSeriesInstalments = async (
     if (!regex.test(seriesId))
         return new InvalidProgramIdError('Invalid Series Id')
 
-    const queryParameter = interfaceToQuery(options)
-    const result = await axios
-        .get(
-            `https://psapi.nrk.no/tv/catalog/series/${seriesId}/instalments?${queryParameter}`
-        )
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError("Series doesn't exist")
-            else if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/catalog/series/${seriesId}/instalments`,
+        options
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
@@ -452,11 +353,12 @@ export const getTvSeriesInstalments = async (
  * @param {string} seriesId - The id of the series
  * @param {string | number} seasonId - The id of the season
  * @param {SeasonOptions} options - The options for the request (default: undefined)
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getSeriesSeason('kongen-av-gulset', 1)
  * @throws {InvalidProgramIdError} - If the series id is invalid
- * @throws {PageNotFoundError} - If the series or season doesn't exist
- * @throws {RateLimitError} - If the rate limit is exceeded
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getSeriesSeason = async (
@@ -468,45 +370,31 @@ export const getSeriesSeason = async (
     if (!regex.test(seriesId))
         return new InvalidProgramIdError('Invalid Series Id')
 
-    const queryParameter = interfaceToQuery(options)
-    const result = await axios
-        .get(
-            `https://psapi.nrk.no/tv/catalog/series/${seriesId}/seasons/${seasonId}?${queryParameter}`
-        )
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError("Series or season doesn't exist")
-            else if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/catalog/series/${seriesId}/seasons/${seasonId}`,
+        options
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
 
 /**
  * Gets the dimensions for the specified program
  * @param {string} programId - The id of the program
- * @returns {Object} - The response from the request or an axios error
+ * @returns {Promise<Object>} - The response from the query, a custom error, or an axios error for request failed
  * @example getDimensionsForProgram('KOIF75001319')
  * @throws {InvalidProgramIdError} - If the program id is invalid
- * @throws {PageNotFoundError} - If the program doesn't exist
+ * @throws {PageNotFoundError} if the page doesn't exist
+ * @throws {RateLimitError} if the rate limit is exceeded
+ * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
 export const getDimensionsForProgram = async (
     programId: string
 ): Promise<Object> => {
-    const result = await axios
-        .get(`https://psapi.nrk.no/tv/programs/pageviews/ga/${programId}`)
-        .catch((e) => {
-            if (e.response.status === 404)
-                return new PageNotFoundError("Program doesn't exist")
-            else if (e.response.status === 429)
-                return new RateLimitError('Too many requests')
-            return e
-        })
+    const result = await request(
+        `https://psapi.nrk.no/tv/programs/pageviews/ga/${programId}`
+    )
 
-    if (result instanceof Error) return result
-    return result.data
+    return result
 }
