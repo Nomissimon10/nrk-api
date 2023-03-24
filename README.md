@@ -12,6 +12,7 @@
     <li><a href="#features">Features</a></li>
     <li><a href="#errors">Handling Errors</a></li>
     <li><a href="#api">NRK API</a></li>
+    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#disclaimer">Disclaimer</a></li>
 </ul>
 
@@ -47,6 +48,9 @@
 
 <h2 id="api">NRK API</h2>
 <p>This package uses the NRK API to retrieve information, the documentation for the api can be found <a href="https://psapi.nrk.no/documentation/">here</a>.</p>
+
+<h2 id="contributing">Contributing</h2>
+<p>Anyone is welcome to help improve the package, and to fork the project and make pull requests, these will be reviewed by <a href="https://github.com/Nomissimon10"><b>nomissimon10</b></a>.</p>
 
 <h2 id="disclaimer">Disclaimer</h2>
 <p>This package is not affiliated with NRK in any way, and is not neither developed or maintained by NRK.</p>

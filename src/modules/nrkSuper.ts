@@ -250,7 +250,7 @@ export const getSuperSeriesInstalments = async (
 
 export const getSuperSeason = async (
     seriesId: string,
-    seasonId: string
+    seasonId: string | number
 ): Promise<Object> => {
     const regex = /^\w+(?:-\w+)*$/
     if (!regex.test(seriesId))
