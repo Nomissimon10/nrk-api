@@ -10,7 +10,7 @@ export const interfaceToQuery = (options: any | undefined): string => {
         for (let i = 0; i < queryParameters.length; i++)
             if (options[queryParameters[i]])
                 queryParameter +=
-                    queryParameter.length > 0
+                    i > 0
                         ? `&${queryParameters[i]}=${
                               options[queryParameters[i]]
                           }`
