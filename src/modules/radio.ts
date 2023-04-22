@@ -12,14 +12,14 @@ import { request } from '../utils'
 
 /**
  * Get all radio pages
- * @returns {Promise<Object>} All radio pages
+ * @returns {Promise<any>} All radio pages
  * @example getAllRadioPages()
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
  * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
-export const getAllRadioPages = async (): Promise<Object> => {
+export const getAllRadioPages = async (): Promise<any> => {
     const result = await request('https://psapi.nrk.no/radio/pages')
 
     return result
@@ -29,7 +29,7 @@ export const getAllRadioPages = async (): Promise<Object> => {
  * Get the given radio page
  * @param {string} pageId - The id of the radio page
  * @param {RadioPageOptions} options - Options for the request (default: undefined)
- * @returns {Promise<Object>} The radio page
+ * @returns {Promise<any>} The radio page
  * @example getRadioPage('discover')
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
@@ -39,7 +39,7 @@ export const getAllRadioPages = async (): Promise<Object> => {
 export const getRadioPage = async (
     pageId: string,
     options?: RadioPageOptions
-): Promise<Object> => {
+): Promise<any> => {
     const result = await request(
         `https://psapi.nrk.no/radio/pages/${pageId}`,
         options

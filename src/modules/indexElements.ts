@@ -14,7 +14,7 @@ import { request } from '../utils'
 /**
  * Get all letters from a medium
  * @param {Medium} medium - The medium to get letters from
- * @returns {Promise<Object>} - Returns all letters from a medium
+ * @returns {Promise<any>} - Returns all letters from a medium
  * @example getAllLettersFromMedium(Medium.TV)
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
@@ -24,7 +24,7 @@ import { request } from '../utils'
  */
 export const getAllLettersFromMedium = async (
     medium: Medium
-): Promise<Object> => {
+): Promise<any> => {
     const result = await request(
         `https://psapi.nrk.no/medium/${medium}/letters`
     )
@@ -37,7 +37,7 @@ export const getAllLettersFromMedium = async (
  * @param {Medium} medium - The medium to get index elements from
  * @param {string} letter - The letter to get index elements from
  * @param {SuperUniverseOptions} options - Options for the index elements (default: undefined)
- * @returns {Promise<Object>} - Returns index elements from a medium
+ * @returns {Promise<any>} - Returns index elements from a medium
  * @example getIndexElementsFromMedium(Medium.TV, 'a')
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
@@ -47,7 +47,7 @@ export const getIndexElementsFromMedium = async (
     medium: Medium,
     letter: string,
     options?: SuperUniverseOptions
-): Promise<Object> => {
+): Promise<any> => {
     if (letter.length > 1) throw new Error('Letter must be a single character')
 
     const result = await request(

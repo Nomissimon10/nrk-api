@@ -17,14 +17,14 @@ import { request } from '../utils'
 
 /**
  * Get all NRK Super pages
- * @returns {Promise<Object>} Returns all NRK Super pages
+ * @returns {Promise<any>} Returns all NRK Super pages
  * @example getAllSuperPages()
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
  * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
-export const getAllSuperPages = async (): Promise<Object> => {
+export const getAllSuperPages = async (): Promise<any> => {
     const result = await request(`https://psapi.nrk.no/super/pages`)
 
     return result.data
@@ -34,7 +34,7 @@ export const getAllSuperPages = async (): Promise<Object> => {
  * Get a NRK Super page
  * @param {string} pageId - The ID of the NRK Super page
  * @param {NRKSuperPageOptions} options - Options for the NRK Super page (default: undefined)
- * @returns {Promise<Object>} - Returns a NRK Super page
+ * @returns {Promise<any>} - Returns a NRK Super page
  * @example getNRKSuperPage('superforside')
  * @throws {PageNotFoundError} if the page doesn't exist
  * @throws {RateLimitError} if the rate limit is exceeded
@@ -44,7 +44,7 @@ export const getAllSuperPages = async (): Promise<Object> => {
 export const getNRKSuperPage = async (
     pageId: string,
     options?: NRKSuperPageOptions
-): Promise<Object> => {
+): Promise<any> => {
     const result = await request(
         `https://psapi.nrk.no/super/pages/${pageId}`,
         options
@@ -65,7 +65,7 @@ export const getNRKSuperPage = async (
 /**
  * Get metadata from a NRK Super program
  * @param {string} programId - The ID of the NRK Super program
- * @returns {Promise<Object>} - Returns metadata from a NRK Super program
+ * @returns {Promise<any>} - Returns metadata from a NRK Super program
  * @example getSuperProgramMetadata('MSUS08000119')
  * @throws {InvalidProgramIdError} - If the program id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -75,7 +75,7 @@ export const getNRKSuperPage = async (
  */
 export const getSuperProgramMetadata = async (
     programId: string
-): Promise<Object> => {
+): Promise<any> => {
     const regex1 = /^\w{4}\d{8}$/
     const regex2 = /^\w{4}\d{8}\w{4}$/
     if (!regex1.test(programId) && !regex2.test(programId))
@@ -91,7 +91,7 @@ export const getSuperProgramMetadata = async (
 /**
  * Get dimensions for a NRK Super program
  * @param {string} programId - The ID of the NRK Super program
- * @returns {Promise<Object>} - Returns dimensions for a NRK Super program
+ * @returns {Promise<any>} - Returns dimensions for a NRK Super program
  * @example getSuperProgramDimensions('MSUS08000119')
  * @throws {InvalidProgramIdError} - If the program id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -101,7 +101,7 @@ export const getSuperProgramMetadata = async (
  */
 export const getSuperProgramDimensions = async (
     programId: string
-): Promise<Object> => {
+): Promise<any> => {
     const regex1 = /^\w{4}\d{8}$/
     const regex2 = /^\w{4}\d{8}\w{4}$/
     if (!regex1.test(programId) && !regex2.test(programId))
@@ -117,7 +117,7 @@ export const getSuperProgramDimensions = async (
 /**
  * Get a NRK Super program link
  * @param {string} programId - The ID of the NRK Super program
- * @returns {Promise<Object>} - Returns a NRK Super program link
+ * @returns {Promise<any>} - Returns a NRK Super program link
  * @example getSuperProgramLink('MSUS08000119')
  * @throws {InvalidProgramIdError} - If the program id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -127,7 +127,7 @@ export const getSuperProgramDimensions = async (
  */
 export const getSuperProgramLink = async (
     programId: string
-): Promise<Object> => {
+): Promise<any> => {
     const regex1 = /^\w{4}\d{8}$/
     const regex2 = /^\w{4}\d{8}\w{4}$/
     if (!regex1.test(programId) && !regex2.test(programId))
@@ -144,7 +144,7 @@ export const getSuperProgramLink = async (
  * Get a NRK Super series metadata
  * @param {string} seriesId - The ID of the NRK Super series
  * @param {NRKSuperMetadataSeriesOptions} options - Options for the NRK Super series (default: undefined)
- * @returns {Promise<Object>} - Returns a NRK Super series metadata
+ * @returns {Promise<any>} - Returns a NRK Super series metadata
  * @example getSuperSeriesMetadata('supernytt')
  * @throws {InvalidProgramIdError} - If the program id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -155,7 +155,7 @@ export const getSuperProgramLink = async (
 export const getSuperSeriesMetadata = async (
     seriesId: string,
     options?: NRKSuperMetadataSeriesOptions
-): Promise<Object> => {
+): Promise<any> => {
     const regex = /^\w+(?:-\w+)*$/
     if (!regex.test(seriesId))
         return new InvalidProgramIdError('Invalid Series Id')
@@ -171,7 +171,7 @@ export const getSuperSeriesMetadata = async (
 /**
  * Get the type of series
  * @param {string} seriesId - The ID of the NRK Super series
- * @returns {Promise<Object>} - Returns the type of series
+ * @returns {Promise<any>} - Returns the type of series
  * @example getSuperTypeSeries('supernytt')
  * @throws {InvalidProgramIdError} - If the program id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -179,7 +179,7 @@ export const getSuperSeriesMetadata = async (
  * @throws {AgeRestrictionError} if the item is age restricted
  * @throws {AxiosError} if the request fails
  */
-export const getSuperTypeSeries = async (seriesId: string): Promise<Object> => {
+export const getSuperTypeSeries = async (seriesId: string): Promise<any> => {
     const regex = /^\w+(?:-\w+)*$/
     if (!regex.test(seriesId))
         return new InvalidProgramIdError('Invalid Series Id')
@@ -194,7 +194,7 @@ export const getSuperTypeSeries = async (seriesId: string): Promise<Object> => {
 /**
  * Get the extramaterial of a series
  * @param {string} seriesId - The ID of the NRK Super series
- * @returns {Promise<Object>} - Returns the extramaterial of a series
+ * @returns {Promise<any>} - Returns the extramaterial of a series
  * @example getSuperSeriesExtramaterial('supernytt')
  * @throws {InvalidProgramIdError} - If the program id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -204,7 +204,7 @@ export const getSuperTypeSeries = async (seriesId: string): Promise<Object> => {
  */
 export const getSuperSeriesExtramaterial = async (
     seriesId: string
-): Promise<Object> => {
+): Promise<any> => {
     const regex = /^\w+(?:-\w+)*$/
     if (!regex.test(seriesId))
         return new InvalidProgramIdError('Invalid Series Id')
@@ -224,7 +224,7 @@ export const getSuperSeriesExtramaterial = async (
  * Get the instalments of a series
  * @param {string} seriesId - The ID of the NRK Super series
  * @param {SuperInstalmentOptions} options - Options for the NRK Super series (default: undefined)
- * @returns {Promise<Object>} - Returns the instalments of a series
+ * @returns {Promise<any>} - Returns the instalments of a series
  * @example getSuperSeriesInstalments('supernytt')
  * @throws {InvalidProgramIdError} - If the program id is invalid
  * @throws {PageNotFoundError} if the page doesn't exist
@@ -235,7 +235,7 @@ export const getSuperSeriesExtramaterial = async (
 export const getSuperSeriesInstalments = async (
     seriesId: string,
     options?: SuperInstalmentOptions
-): Promise<Object> => {
+): Promise<any> => {
     const regex = /^\w+(?:-\w+)*$/
     if (!regex.test(seriesId))
         return new InvalidProgramIdError('Invalid Series Id')
@@ -251,7 +251,7 @@ export const getSuperSeriesInstalments = async (
 export const getSuperSeason = async (
     seriesId: string,
     seasonId: string | number
-): Promise<Object> => {
+): Promise<any> => {
     const regex = /^\w+(?:-\w+)*$/
     if (!regex.test(seriesId))
         return new InvalidProgramIdError('Invalid Series Id')
